@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 
 
 const MongoClient = require("mongodb").MongoClient;
-const uri = "mongodb+srv://test:test@sos-nwznc.mongodb.net/sos?retryWrites=true";
+const uri = "mongodb+srv://test:test@sos-idqtq.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 var contacts;
@@ -35,6 +35,7 @@ app.get("/contacts", (req,res)=>{
 // POST /contacts/
 
 app.post("/contacts", (req,res)=>{
+    
     
     var newContact = req.body;
     
