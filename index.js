@@ -6,10 +6,10 @@ const MongoClient = require("mongodb").MongoClient;
 const uri = "mongodb+srv://test:test@sos-idqtq.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
-var contacts;
+var publicHealthExpenses;
 
 client.connect(err => {
-  contacts = client.db("sos1819").collection("contacts");
+  publicHealthExpenses = client.db("sos1819").collection("contacts");
   console.log("Connected!");
 });
 
@@ -19,32 +19,27 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;
 
-app.get("/contacts", (req,res)=>{
-    
-    contacts.find({}).toArray((err,contactsArray)=>{
-        
-        if(err)
-            console.log("Error: "+err);
-        
-        res.send(contactsArray);        
-    });
 
+// GET /api/v1/public-health-expenses
+
+app.get("/api/v1/public-health-expenses", (req, res) => {
+    var name = req.params.name;
+
+	publicHealthExpenses.findById(name, (err, publicHealthExpense) => {
+	    
+		if(err){
+			res.status(500).send({message: 'Error en la petición.'});
+		}else{
+			if(!publicHealthExpense){
+				res.status(404).send({message: 'El artista no existe'});
+			}else{
+				res.status(200).send({publicHealthExpense});
+			}
+		}
+	});
 });
-
-
-// POST /contacts/
-
-app.post("/contacts", (req,res)=>{
-    
-    
-    var newContact = req.body;
-    
-    contacts.insert(newContact);
-    
-    res.sendStatus(201);
-});
-
 
 app.listen(port, () => {
+
     console.log("Super server ready on port " + port);
 });
