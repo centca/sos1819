@@ -22,7 +22,7 @@ var port = process.env.PORT || 8080;
 
 // GET /api/v1/public-health-expenses
 
-app.get("/api/v1/public-health-expenses", (req, res) => {
+app.get("/api/v1/public-health-expenses/:name", (req, res) => {
     var name = req.params.name;
 
 	publicHealthExpenses.findById(name, (err, publicHealthExpense) => {
