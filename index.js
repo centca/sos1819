@@ -20,6 +20,11 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 8080;
 
 
+app.get("/api/v1/public-expenditure-educations/docs", (req, res) => {
+
+    res.redirect("https://documenter.getpostman.com/view/4815062/S17oxV3R");
+});
+
 
 
 app.get("/api/v1/public-expenditure-educations/loadInitialData", (req, res) => {
