@@ -32,56 +32,82 @@ app.get("/api/v1/public-expenditure-educations/loadInitialData", (req, res) => {
     var newPublicExpenditureEducations = [{
 
     country: "espania",
-    year: "2015",
-    educationExpense: "46241,5",
-    educationExpensePub: "9,77",
-    educationExpensePib: "4,28",
-    healthExpenditurePerCapita: "977",
-    var_: "-13,08",
+    year: 2015,
+    educationExpense: 46241.5,
+    educationExpensePub: 9.77,
+    educationExpensePib: 4.28,
+    healthExpenditurePerCapita: 977,
+    var_: -13.08,
 
 }, {
     country: "alemania",
-    year: "2015",
-    educationExpense: "146754,1",
-    educationExpensePub: "10,98",
-    educationExpensePib: "4,81",
-    healthExpenditurePerCapita: "1975",
-    var_: "-16,16",
+    year: 2015,
+    educationExpense: 146754.1,
+    educationExpensePub: 10.98,
+    educationExpensePib: 4.81,
+    healthExpenditurePerCapita: 1975,
+    var_: -16.16,
 
 }, {
     country: "reino unido",
-    year: "2016",
-    educationExpense: "133190,4",
-    educationExpensePub: "13,91",
-    educationExpensePib: "5,54",
-    healthExpenditurePerCapita: "2028",
-    var_: "-10,36",
+    year: 2013,
+    educationExpense: 133190.4,
+    educationExpensePub: 13.91,
+    educationExpensePib: 5.54,
+    healthExpenditurePerCapita: 2028,
+    var_: -10.36,
 
 }, {
     country: "portugal",
-    year: "2016",
-    educationExpense: "133,4",
-    educationExpensePub: "132,91",
-    educationExpensePib: "52,54",
-    healthExpenditurePerCapita: "228",
-    var_: "-10,36",
+    year: 2018,
+    educationExpense: 133.4,
+    educationExpensePub: 132.91,
+    educationExpensePib: 52.54,
+    healthExpenditurePerCapita: 228,
+    var_: -10.36,
 
 }, {
     country: "belgica",
-    year: "2016",
-    educationExpense: "13313,4",
-    educationExpensePub: "13,91",
-    educationExpensePib: "5,54",
-    healthExpenditurePerCapita: "28",
-    var_: "-10,36",
+    year: 2016,
+    educationExpense: 13313.4,
+    educationExpensePub: 13.91,
+    educationExpensePib: 5.54,
+    healthExpenditurePerCapita: 28,
+    var_: -10.36,
 
 }];
 
-    newPublicExpenditureEducations.forEach((i) => {
-        publicExpenditureEducations.insert(i)
+    
+        
+        publicExpenditureEducations.find({}).toArray((err, pEE) => {
+            
+            if(err){
+                
+                res.sendStatus(500);
+                
+            }else{
+                
+                if(pEE.length>0){
+                    
+                    res.sendStatus(409);
+                    
+                }else{
+                    
+                    newPublicExpenditureEducations.forEach((i) => {
+                        console.log(i);
+                        publicExpenditureEducations.insert(i);
+                        
+                    
+                    });
+                    res.sendStatus(200);
+                }
+                
+            }
+            
+        });
 
-    })
-    res.sendStatus(200);
+    
+    
 });
 
 
@@ -89,20 +115,99 @@ app.get("/api/v1/public-expenditure-educations/loadInitialData", (req, res) => {
 // --------------------------------------------   GET /api/v1/public-health-expenses -----------------------------------------------------
 
 app.get("/api/v1/public-expenditure-educations", (req, res) => {
+    
+        //Busqueda por año
+        var startY = parseInt(req.query.from);
+        var endY = parseInt(req.query.to);
+        //Paginación
+        var limit = parseInt(req.query.limit);
+        var offset = parseInt(req.query.offset);
+    
+        
+        //Paginación y Búsqueda
+        if(Number.isInteger(limit) && Number.isInteger(offset) && Number.isInteger(startY) && Number.isInteger(endY)){
+        
+            publicExpenditureEducations.find({ "year": { $gte: startY, $lte: endY } }).skip(offset).limit(limit).toArray( (err, publicExpenditureEducation) => {
+    	        
+        		if(err){
+        			
+        			res.sendStatus(500);
+        			
+        		}else{
+        			
+        			res.status(200).send(publicExpenditureEducation.map((c)=>{
+        			    delete c._id;
+        			    return c;
+        			    
+        			}));
+        	
+        		}
+    	    });
+    	   
+    	//Paginacón
+        }else if(Number.isInteger(limit) && Number.isInteger(offset) ){
+            
+            publicExpenditureEducations.find({}).skip(offset).limit(limit).toArray( (err, publicExpenditureEducation) => {
+    	        
+        		if(err){
+        			
+        			res.sendStatus(500);
+        			
+        		}else{
+        			
+        			res.status(200).send(publicExpenditureEducation.map((c)=>{
+        			    delete c._id;
+        			    return c;
+        			    
+        			}));
+        	
+        		}
+    	    });
+        //Búsqueda 
+        }else if(Number.isInteger(startY) && Number.isInteger(endY)){
+            
+            publicExpenditureEducations.find({ "year": { $gte: startY, $lte: endY } }).toArray( (err, publicExpenditureEducation) => {
+    	        
+        		if(err){
+        			
+        			res.sendStatus(500);
+        			
+        		}else{
+        			
+        			res.status(200).send(publicExpenditureEducation.map((c)=>{
+        			    delete c._id;
+        			    return c;
+        			    
+        			}));
+        	
+        		}
+    	    });
+        }else{
 
-	publicExpenditureEducations.find({}).toArray( (err, publicExpenditureEducation) => {
-	    
-		if(err){
-			
-			res.sendStatus(500);
-			
-		}else{
-			
-			res.status(200).send(publicExpenditureEducation);
-	
-		}
-	});
+            publicExpenditureEducations.find({}).toArray( (err, publicExpenditureEducation) => {
+    	        
+        		if(err){
+        			
+        			res.sendStatus(500);
+        			
+        		}else{
+        			
+        			res.status(200).send(publicExpenditureEducation.map((c)=>{
+        			    delete c._id;
+        			    return c;
+        			    
+        			}));
+        	
+        		}
+    	    });
+            
+        }
+
+    
 });
+    
+
+	
 
 
 
@@ -322,9 +427,41 @@ app.post("/api/v1/public-expenditure-educations/:country", (req, res) => {
 
 });
 
+
+//   -------------------------------------------- GET /api/v1/secute/public-health-expenses -------------------------------------------
+app.get("/api/v1/secute/public-health-expenses", (req, res) => {
+    
+        var user = req.headers.user;
+        var pass = req.headers.pass;
+        
+        if (user == "jmcc" && pass == "jmcc") { // pasamanos por la cabecera el usuario y la contraseña
+            
+            publicExpenditureEducations.find({}).toArray( (err, publicExpenditureEducation) => {
+                    
+                    if (err) {
+                        
+                        res.sendStatus(500);
+                        
+                    }else {
+                        
+                        res.send(publicExpenditureEducation.map((c) => {
+                            delete c._id;
+                            return c;
+                        }));
+                    }
+                   
+                });
+            
+            
+        }else {
+            // No autorizado
+            res.sendStatus(401);
+        }
+    });
+
+
+
 //----------------------------------------------------------------------------
-
-
 
 app.listen(port, () => {
 
