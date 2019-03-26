@@ -1,15 +1,19 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-
-
 const MongoClient = require("mongodb").MongoClient;
-const uri = "mongodb+srv://test:test@sos-idqtq.mongodb.net/test?retryWrites=true";
+
+const uri = "mongodb+srv://test:test@sos-xfza6.mongodb.net/test?retryWrites=true";
+//const uri = "mongodb+srv://test:test@sos-idqtq.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 var publicExpenditureEducations;
 
 client.connect(err => {
-  publicExpenditureEducations = client.db("sos1819").collection("public-expenditure-educations");
+    
+    
+publicExpenditureEducations = client.db("SOS1819").collection("public-health-expenses");  
+    
+  //publicExpenditureEducations = client.db("sos1819").collection("public-expenditure-educations");
   console.log("Connected!");
 });
 
@@ -94,7 +98,7 @@ app.get("/api/v1/public-expenditure-educations/loadInitialData", (req, res) => {
                 }else{
                     
                     newPublicExpenditureEducations.forEach((i) => {
-                        console.log(i);
+                        
                         publicExpenditureEducations.insert(i);
                         
                     
