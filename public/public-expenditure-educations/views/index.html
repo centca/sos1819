@@ -1,0 +1,515 @@
+<html ng-app="MiniPostmanApp">
+    <head>
+        
+        <title>Mini Postman</title>
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" >
+        <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/bower_components/angular/angular.min.js"></script>
+        
+        <script src="app.js"></script>
+        <script src="/public-expenditure-educations/controllers/minipostman.controller.js"></script>
+ 
+    </head>
+    
+    <body ng-controller="MainCtrl">
+        
+        <h1 class="text-center">My minipostman</h1>
+        
+         <hr style="color: #0056b2;" noshade="noshade"  width="50%" />
+        <! ----------------------------------------------------------loadInitialData----------------------------------------------------------------->
+        <div class="container">
+            
+             <div class="row">
+                  
+                <div class="col-sm">
+                    
+                    <form>
+                          <div class="form-group">
+                              
+                            <label>Get /api/v1/public-expenditure-educations/loadInitialData</label>
+                            
+                          </div>
+                          
+                          
+                          <button type="submit" ng-click = "inicial()" class="btn btn-primary">Enviar</button>
+                      
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm">
+                    
+                    <div class="alert alert-warning" role="alert"  ng-model="dataInicial" >
+                    
+                        Status: {{dataInicial.status}}
+                        
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+            
+            
+            
+                
+        <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+            
+        <! ----------------------------------------------------------Get /api/v1/public-expenditure-educations/----------------------------------------------------------------->
+            
+             <div class="row">
+                  
+                <div class="col-sm">
+                    
+                    <form>
+                          <div class="form-group">
+                              
+                            <label>Get /api/v1/public-expenditure-educations/</label>
+                            
+                          </div>
+                          
+                          
+                          <button type="submit" ng-click = "getList()" class="btn btn-primary">Enviar</button>
+                      
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm">
+                    
+                    <div class="alert alert-warning" role="alert"  ng-model="getLista" >
+                    
+                        Status: {{getLista.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{getLista.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+            
+            
+            
+                
+             <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+            
+            
+            <! ----------------------------------------------------------Get /api/v1/public-expenditure-educations/:espania----------------------------------------------------------------->
+            
+             <div class="row">
+                  
+                <div class="col-sm-6">
+                    
+                    <form>
+                        <div class="form-row">
+                          <div class="form-group col-sm-8">
+                              
+                            <label >Get /api/v1/public-expenditure-educations</label>
+                            
+                          </div>
+                          
+                          <div class="form-group col-sm-4">
+                            <input type="text" class="form-control" placeholder="/Recurso" ng-model="consulta">
+                          </div>
+                          
+                        </div>
+                          
+                          <button type="submit" class="btn btn-primary " ng-click = "get(consulta)">Enviar</button>
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm-6" ng-model="getConsulta">
+                    
+                    <div class="alert alert-warning" role="alert"  >
+                    
+                        Status: {{getConsulta.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{getConsulta.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+            
+            
+            
+                
+             <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+            
+            <! ----------------------------------------------------------Post /api/v1/public-expenditure-educations/----------------------------------------------------------------->
+            
+              <div class="row">
+                  
+                <div class="col-sm">
+                    
+                    <form ng-model="data">
+                        <div class="form-group">
+                              
+                            <label >Post /api/v1/public-expenditure-educations</label>
+                            
+                          </div>
+                        
+                         <div class="form-group">
+                            <label>country</label>
+                            <input type="test" class="form-control" ng-model ="data.country" placeholder="espania">
+                            {{country}}
+                          </div>
+                          
+                          <div class="form-group">
+                              
+                            <label>Year</label>
+                            <input type="text" class="form-control" ng-model ="data.year" placeholder="2015">
+                    
+                          </div>
+                          
+                          
+                           <div class="form-group">
+                              
+                            <label >EducationExpense</label>
+                            <input type="text" class="form-control" ng-model ="data.educationExpense" placeholder="46241.5">
+                            
+                          </div>
+                          
+                          <div class="form-group">
+                            <label>EducationExpensePub</label>
+                            <input type="test" class="form-control" ng-model ="data.educationExpensePub"  placeholder="9.77">
+                          </div>
+                          
+                          <div class="form-group">
+                              
+                            <label >EducationExpensePib</label>
+                            <input type="text" class="form-control" ng-model ="educationExpensePib"  placeholder="4.28">
+                            
+                          </div>
+                          
+                          <div class="form-group">
+                            <label>HealthExpenditurePerCapita</label>
+                            <input type="test" class="form-control" ng-model ="data.healthExpenditurePerCapita" placeholder="977">
+                          </div>
+                          
+                           <div class="form-group">
+                            <label>Var</label>
+                            <input type="test" class="form-control" ng-model ="data.var_" placeholder="977">
+                          </div>
+                          
+
+                          
+                          <button type="submit" class="btn btn-success" ng-click = "post(data)">Enviar</button>
+                      
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm-6" ng-model="postRespuesta">
+                    
+                    <div class="alert alert-warning" role="alert"  >
+                    
+                        Status: {{postRespuesta.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{postRespuesta.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+              
+              
+              <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+            
+            <! ----------------------------------------------------------Put /api/v1/public-expenditure-educations/espania/2015----------------------------------------------------------------->
+            
+              <div class="row">
+                  
+                <div class="col-sm">
+                    
+                    <form ng-model="dataput">
+                         <div class="form-row">
+                          <div class="form-group col-sm-8">
+                              
+                            <label >Put /api/v1/public-expenditure-educations</label>
+                            
+                          </div>
+                          
+                          <div class="form-group col-sm-4">
+                            <input type="text" class="form-control" placeholder="/recurso" ng-model="model.update">
+                          </div>
+                          
+                        </div>
+                        
+                        
+                        
+                         <div class="form-group">
+                            <label>country</label>
+                            <input type="test" class="form-control" ng-model ="dataput.country" placeholder="espania">
+
+                          </div>
+                          
+                          <div class="form-group">
+                              
+                            <label>Year</label>
+                            <input type="text" class="form-control" ng-model ="dataput.year" placeholder="2015">
+                    
+                          </div>
+                          
+                          
+                           <div class="form-group">
+                              
+                            <label >EducationExpense</label>
+                            <input type="text" class="form-control" ng-model ="dataput.educationExpense" placeholder="46241.5">
+                            
+                          </div>
+                          
+                          <div class="form-group">
+                            <label>EducationExpensePub</label>
+                            <input type="test" class="form-control" ng-model ="dataput.educationExpensePub"  placeholder="9.77">
+                          </div>
+                          
+                          <div class="form-group">
+                              
+                            <label >EducationExpensePib</label>
+                            <input type="text" class="form-control" ng-model ="dataput.educationExpensePib"  placeholder="4.28">
+                            
+                          </div>
+                          
+                          <div class="form-group">
+                            <label>HealthExpenditurePerCapita</label>
+                            <input type="test" class="form-control" ng-model ="dataput.healthExpenditurePerCapita" placeholder="977">
+                          </div>
+                          
+                           <div class="form-group">
+                            <label>Var</label>
+                            <input type="test" class="form-control" ng-model ="dataput.var_" placeholder="977">
+                          </div>
+                          
+
+                          
+                          <button type="submit" class="btn btn-success" ng-click = "put(model.update)">Enviar</button>
+                      
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm-6" ng-model="putRespuesta">
+                    
+                    <div class="alert alert-warning" role="alert"  >
+                    
+                        Status: {{putRespuesta.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{putRespuesta.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+              
+               <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+               
+               
+            <! ----------------------------------------------------------Delete /api/v1/public-expenditure-educations/----------------------------------------------------------------->
+            
+             <div class="row">
+                  
+                <div class="col-sm">
+                    
+                    <form>
+                          <div class="form-group">
+                              
+                            <label>Delete /api/v1/public-expenditure-educations/</label>
+                            
+                          </div>
+                          
+                          
+                          <button type="submit" ng-click = "deleteAll()" class="btn btn-danger">Enviar</button>
+                      
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm">
+                    
+                    <div class="alert alert-warning" role="alert"  ng-model="deleteRespuesta" >
+                    
+                        Status: {{deleteRespuesta.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{deleteRespuesta.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+            
+            
+            
+                
+             <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+             
+             
+             
+              <! ----------------------------------------------------------Delete /api/v1/public-expenditure-educations/espania----------------------------------------------------------------->
+            
+             <div class="row">
+                  
+                <div class="col-sm-6">
+                    
+                    <form>
+                        <div class="form-row">
+                          <div class="form-group col-sm-8">
+                              
+                            <label >Delete /api/v1/public-expenditure-educations</label>
+                            
+                          </div>
+                          
+                          <div class="form-group col-sm-4">
+                            <input type="text" class="form-control" placeholder="/Recurso" ng-model="deleteRecurso">
+                          </div>
+                          
+                        </div>
+                          
+                          <button type="submit" class="btn btn-danger" ng-click = "deleteR(deleteRecurso)">Enviar</button>
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm-6" ng-model="deleteRecRespuesta">
+                    
+                    <div class="alert alert-warning" role="alert"  >
+                    
+                        Status: {{deleteRecRespuesta.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{deleteRecRespuesta.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+            
+            
+            
+                
+             <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+            
+            
+             
+             <! ----------------------------------------------------------Post(405) /api/v1/public-expenditure-educations/:espania----------------------------------------------------------------->
+            
+             <div class="row">
+                  
+                <div class="col-sm-6">
+                    
+                    <form>
+                        <div class="form-row">
+                          <div class="form-group col-sm-8">
+                              
+                            <label >Post (Error 405) /api/v1/public-expenditure-educations/espania</label>
+                            
+                          </div>
+                          
+                          <div class="form-group col-sm-4">
+                            <input type="text" class="form-control" placeholder="/Recurso" ng-model="consulta">
+                          </div>
+                          
+                        </div>
+                          
+                          <button type="submit" class="btn btn-warning" ng-click = "postConf(consulta)">Enviar</button>
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm-6" ng-model="postRecRespuesta">
+                    
+                    <div class="alert alert-warning" role="alert"  >
+                    
+                        Status: {{postRecRespuesta.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{postRecRespuesta.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+            
+            
+            
+                
+             <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+            
+             
+             <! ----------------------------------------------------------Delete /api/v1/public-expenditure-educations/----------------------------------------------------------------->
+            
+             <div class="row">
+                  
+                <div class="col-sm">
+                    
+                    <form>
+                          <div class="form-group">
+                              
+                            <label>Put (Error 405) /api/v1/public-expenditure-educations/</label>
+                            
+                          </div>
+                          
+                          
+                          <button type="submit" ng-click = "putConf()" class="btn btn-warning">Enviar</button>
+                      
+                    </form>
+                    
+                </div>
+                
+                <div class="col-sm">
+                    
+                    <div class="alert alert-warning" role="alert"  ng-model="putConfcRespuesta" >
+                    
+                        Status: {{putConfcRespuesta.status}}
+                        
+                    </div>
+                    <div class="alert alert-secondary" role="alert">
+                          Respuesta: {{putConfcRespuesta.datos}}
+                    </div>
+            
+                </div>
+               
+              </div>
+              
+            
+            
+            
+                
+             <hr style="color: #0056b2;" noshade="noshade"  width="100%" />
+             
+              
+              <!-------------------------------------------->
+        </div>
+            
+  
+        
+    </body>
+</html>
+
+
+
+<! ----------------------------------------------------------Put /api/v1/public-expenditure-educations/:espania:año----------------------------------------------------------------->
+            
+              
+  
+        
